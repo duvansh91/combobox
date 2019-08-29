@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.main-container{
+  width: 80% !important;
+  margin-left: auto;
+  margin-right: auto;
+  height: 500px;;
+  margin-top: 50px;
+}
+
+.main-table{
+  width: 80% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-box{
+  float: left; 
+}
+
+.add-person{
+  margin-top: 100px !important;
+}
+
+.close{
+  float: right;
+  margin: 15px !important;
+}
