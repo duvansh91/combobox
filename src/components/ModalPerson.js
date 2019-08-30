@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -31,18 +30,24 @@ class ModalPerson extends Component {
         return null;
     }
 
+
+     onSelectHandle = (item) => {
+         const closed = false;
+        this.props.onSelect(item,closed);
+    } 
+
     render() {
 
         const { rows, open } = this.state;
 
         const persons = ({ index, style }) => (
-            <ListItem button style={style} key={index}>
+            <ListItem button style={style} key={index} onClick={() =>{this.onSelectHandle(rows[index].key)}}>
                 <ListItemAvatar>
                     <Avatar>
                         <ImageIcon />
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={rows[index].name} secondary={rows[index].age} />
+                <ListItemText primary={rows[index].title} secondary={rows[index].description} />
             </ListItem>
         );
 
