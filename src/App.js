@@ -1,36 +1,52 @@
 import React, { Component } from 'react';
 import './App.css';
 import Paper from '@material-ui/core/Paper';
-
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import ModalPerson from './components/ModalPerson';
-
-
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rows: [
-        this.createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        this.createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        this.createData('Eclair', 262, 16.0, 24, 6.0),
-        this.createData('Cupcake', 305, 3.7, 67, 4.3),
-        this.createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ]
+        { key: 1, name: 'Juan Mejias', age: 18 },
+        { key: 2, name: 'Pedro Almirante', age: 25 },
+        { key: 3, name: 'Mathew Person', age: 30 },
+        { key: 4, name: 'Teresa Albañez', age: 40 },
+        { key: 5, name: 'Juan Peralta', age: 23 },
+        { key: 6, name: 'Leonardo Galves', age: 19 },
+        { key: 7, name: 'Favio Lopez', age: 28 },
+        { key: 8, name: 'Timothy Keller', age: 29 },
+        { key: 9, name: 'Rodrigo Ibañez', age: 47 },
+        { key: 10, name: 'Jose Barraza', age: 23 },
+        { key: 11, name: 'Alex Guerra', age: 22 },
+        { key: 12, name: 'Antonio salcedo', age: 24 },
+        { key: 13, name: 'Aris Julio', age: 23 },
+        { key: 14, name: 'Winston Stand', age: 24 }
+      ],
+      open: false
     }
   }
 
-  createData = (name, calories, fat, carbs, protein) => {
-    return { name, calories, fat, carbs, protein };
+  onHandleOpen = () => {
+    this.setState({ open: true });
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  }
 
   render() {
-    const { rows } = this.state;
+    const { rows, open } = this.state;
     return (
       <div className="App">
         <Paper className='main-container'>
-          <ModalPerson data={rows} />
+          <Fab variant="extended" className='add-person' onClick={this.onHandleOpen}>
+            <AddIcon />
+            Add person
+                </Fab>
+          <ModalPerson data={rows} open={open} onClose={this.handleClose}/>
         </Paper>
       </div>
     );

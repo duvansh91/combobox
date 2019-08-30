@@ -3,21 +3,22 @@
 }
 
 .main-container{
-  width: 80% !important;
+  width: 400px !important;
   margin-left: auto;
   margin-right: auto;
-  height: 500px;;
+  height: 500px;
   margin-top: 50px;
 }
 
 .main-table{
-  width: 80% !important;
+  width: 100% !important;
   margin-left: auto;
   margin-right: auto;
 }
 
-.search-box{
+.search{
   float: left; 
+  margin: 20px !important;
 }
 
 .add-person{
@@ -27,4 +28,9 @@
 .close{
   float: right;
   margin: 15px !important;
+}
+
+tr:hover{
+  background-color: rgb(235, 235, 235);
+  cursor: pointer;
 }
