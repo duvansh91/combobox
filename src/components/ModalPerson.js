@@ -17,7 +17,8 @@ class ModalPerson extends Component {
         super(props);
         this.state = {
             rows: this.props.data,
-            open: this.props.open
+            open: this.props.open,
+            search: ''
         }
     }
 
@@ -36,9 +37,21 @@ class ModalPerson extends Component {
         this.props.onSelect(item,closed);
     } 
 
+    updateSearch = (event) => {
+        this.setState({ search: event.target.value.substr(0, 20) });
+      }
+
     render() {
 
-        const { rows, open } = this.state;
+        const { rows, open, search } = this.state;
+
+        let filteredRows = rows.filter(
+            function (row) {
+                return row.title.indexOf(search.toLowerCase()) !== -1;
+              }
+          );
+
+          console.log(filteredRows)
 
         const persons = ({ index, style }) => (
             <ListItem button style={style} key={index} onClick={() =>{this.onSelectHandle(rows[index].key)}}>
@@ -65,8 +78,8 @@ class ModalPerson extends Component {
                             id="outlined-name"
                             label="Search"
                             className={'search'}
-                            /* value={values.name}
-                            onChange={handleChange('name')} */
+                            value={search}
+                            onChange={this.updateSearch}
                             margin="normal"
                             variant="outlined"
                         />
