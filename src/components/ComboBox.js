@@ -67,21 +67,15 @@ class ComboBox extends Component {
 
         return (
             <div>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={open}
-                >
+                <Modal open={open}>
                     <Paper className='main-container'>
                         <TextField
                             size="small"
                             className='search-box'
-                            id="outlined-name"
                             label="Search"
                             className={'search'}
                             value={search}
                             onChange={this.updateSearch}
-                            margin="normal"
                             variant="outlined"
                         />
                         <Fab size="small" color="primary" className="close" onClick={this.props.onClose}>

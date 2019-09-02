@@ -71,7 +71,7 @@ class App extends Component {
     return (
       <div className="App">
         <Paper className='main-container'>
-          {selected > 0 ? (
+          {selected.length > 0 ? (
             <Chip
               className="current"
               key={current.key}
