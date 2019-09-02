@@ -3,10 +3,9 @@ import './App.css';
 import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
-import ModalPerson from './components/ModalPerson';
+import ComboBox from './components/ComboBox';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
 import CloseIcon from '@material-ui/icons/Close';
 
 
@@ -15,20 +14,20 @@ class App extends Component {
     super(props);
     this.state = {
       rows: [
-        { key: 1, title: 'Juan Mejias', description: 18 },
-        { key: 2, title: 'Pedro Almirante', description: 25 },
-        { key: 3, title: 'Mathew Person', description: 30 },
-        { key: 4, title: 'Teresa Albañez', description: 40 },
-        { key: 5, title: 'Juan Peralta', description: 23 },
-        { key: 6, title: 'Leonardo Galves', description: 19 },
-        { key: 7, title: 'Favio Lopez', description: 28 },
-        { key: 8, title: 'Timothy Keller', description: 29 },
-        { key: 9, title: 'Rodrigo Ibañez', description: 47 },
-        { key: 10, title: 'Jose Barraza', description: 23 },
-        { key: 11, title: 'Alex Guerra', description: 22 },
-        { key: 12, title: 'Antonio salcedo', description: 24 },
-        { key: 13, title: 'Aris Julio', description: 23 },
-        { key: 14, title: 'Winston Stand', description: 24 }
+        { key: 1, title: 'Juan Mejias', description: '18', image: 'https://image.flaticon.com/icons/svg/701/701993.svg'},
+        { key: 2, title: 'Pedro Almirante', description: '25', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 3, title: 'Mathew Person', description: '30', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 4, title: 'Teresa Albañez', description: '40', image: 'https://image.flaticon.com/icons/svg/702/702016.svg' },
+        { key: 5, title: 'Juan Peralta', description: '23', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 6, title: 'Leonardo Galves', description: '19', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 7, title: 'Karen Perez', description: '28', image: 'https://image.flaticon.com/icons/svg/702/702016.svg' },
+        { key: 8, title: 'Timothy Keller', description: '29', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 9, title: 'Laura Mendoza', description: '47', image: 'https://image.flaticon.com/icons/svg/702/702016.svg' },
+        { key: 10, title: 'Jose Barraza', description: '23', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 11, title: 'Alex Guerra', description: '22', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 12, title: 'Antonio salcedo', description: '24', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 13, title: 'Aris Julio', description: '23', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
+        { key: 14, title: 'Winston Stand', description: '24', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' }
       ],
       open: false,
       selected: [],
@@ -51,8 +50,9 @@ class App extends Component {
   }
 
   renderSelect = () => {
-    if (this.state.selected.length > 0) {
-      this.state.rows.map(row => {
+    const { rows, selected } = this.state;
+    if (selected.length > 0) {
+      rows.map(row => {
         if (row.key === this.state.selected[0]) {
           this.setState({ current: row });
         }
@@ -76,8 +76,7 @@ class App extends Component {
               className="current"
               key={current.key}
               avatar={
-                <Avatar>
-                  <FaceIcon />
+                <Avatar alt="Remy Sharp" src={current.image}>
                 </Avatar>
               }
               label={current.title}
@@ -93,7 +92,7 @@ class App extends Component {
                 </Fab>
             )
           }
-          <ModalPerson data={rows} open={open} onClose={this.handleClose} onSelect={this.onSelect} />
+          <ComboBox data={rows} open={open} onClose={this.handleClose} onSelect={this.onSelect} />
         </Paper>
       </div>
     );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FixedSizeList } from 'react-window';
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
@@ -9,16 +8,17 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
+import List from '@material-ui/core/List';
 
-class ModalPerson extends Component {
+class ComboBox extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             rows: this.props.data,
             open: this.props.open,
-            search: ''
+            search: '',
+            filteredRows: []
         }
     }
 
@@ -32,37 +32,38 @@ class ModalPerson extends Component {
     }
 
 
-     onSelectHandle = (item) => {
-         const closed = false;
-        this.props.onSelect(item,closed);
-    } 
+    onSelectHandle = (item) => {
+        const closed = false;
+        this.props.onSelect(item, closed);
+        this.setState({ search: '' });
 
-    updateSearch = (event) => {
-        this.setState({ search: event.target.value.substr(0, 20) });
-      }
+    }
+
+    updateSearch = (e) => {
+        this.setState({ search: e.target.value });
+    }
+
+    renderRows = (row) => {
+        return (
+            <ListItem key={row.key} button onClick={() => { this.onSelectHandle(row.key) }}>
+                <ListItemAvatar>
+                    <Avatar alt="Remy Sharp" src={row.image}>
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={row.title} secondary={row.description} />
+            </ListItem>);
+    }
 
     render() {
 
-        const { rows, open, search } = this.state;
-
-        let filteredRows = rows.filter(
-            function (row) {
-                return row.title.indexOf(search.toLowerCase()) !== -1;
-              }
-          );
-
-          console.log(filteredRows)
-
-        const persons = ({ index, style }) => (
-            <ListItem button style={style} key={index} onClick={() =>{this.onSelectHandle(rows[index].key)}}>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ImageIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={rows[index].title} secondary={rows[index].description} />
-            </ListItem>
-        );
+        const { open, search, rows } = this.state;
+    
+        const filteredRows = rows.filter(row => {
+            return Object.keys(row).some(key =>{
+                if(key !== 'key' && key !== 'image'){
+                   return row[key].toLowerCase().indexOf(search.toLowerCase()) !== -1;
+                }
+            })});
 
         return (
             <div>
@@ -86,9 +87,13 @@ class ModalPerson extends Component {
                         <Fab size="small" color="primary" className="close" onClick={this.props.onClose}>
                             <CloseIcon />
                         </Fab>
-                        <FixedSizeList height={400} width={360} itemSize={46} itemCount={rows.length}>
-                            {persons}
-                        </FixedSizeList>
+                        <List className="list-rows" style={{ maxHeight: 350 }}>
+                            {
+                                filteredRows.map(current => {
+                                    return this.renderRows(current);
+                                })
+                            }
+                        </List>
                     </Paper>
                 </Modal>
             </div>
@@ -96,4 +101,4 @@ class ModalPerson extends Component {
     }
 }
 
-export default ModalPerson;
+export default ComboBox;

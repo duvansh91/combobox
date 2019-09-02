@@ -3,10 +3,10 @@
 }
 
 .main-container{
-  width: 400px !important;
+  width: 402px !important;
   margin-left: auto;
   margin-right: auto;
-  height: 500px;
+  height: 465px;
   margin-top: 50px;
 }
 
@@ -37,4 +37,10 @@ tr:hover{
 
 .current{
   margin-top: 100px !important;
+}
+
+.list-rows{
+  width: 400px !important;
+  max-height: 350 !important;
+  overflow: auto !important;
 }
