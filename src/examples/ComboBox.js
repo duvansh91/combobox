@@ -13,11 +13,17 @@ import AddIcon from '@material-ui/icons/Add';
 import Chip from '@material-ui/core/Chip';
 
 /*
-You can pass by props:
+**You can pass by props:
 
-data = {yourdata}
-placeHolder = "Text to show on the button"
-selected = () = {}
+*data = [{ key: yourKey, title: yourTitle, description: yourDescription, image: yourUrlImage }]
+*placeHolder = "Text to show on the button"
+
+**For get a selected element
+*Use in your component a callback on onChange prop:
+onChange={(value) => {console.log(value)}}
+
+**Use example:
+<ComboBox placeHolder="your Text" data={yourData} onChange={(value) => {console.log(value)}}/>
 
 */
 
@@ -28,12 +34,10 @@ class ComboBox extends Component {
         super(props);
         this.state = {
             rows: this.props.data,
-            open: this.props.open,
             search: '',
             filteredRows: [],
             open: false,
             selected: [],
-            current: [],
             placeHolder: this.props.placeHolder
         }
     }
@@ -42,6 +46,7 @@ class ComboBox extends Component {
         this.state.selected.push(item);
         this.setState({ search: '' });
         this.setState({ open: false });
+        if(this.props.onChange){this.props.onChange(item)}
     }
 
     updateSearch = (e) => {
@@ -69,12 +74,11 @@ class ComboBox extends Component {
 
     handleDelete = () => {
         this.setState({ selected: [] });
-        this.setState({ current: [] });
     }
 
     render() {
 
-        const { open, search, rows, selected, current, placeHolder } = this.state;
+        const { open, search, rows, selected, placeHolder } = this.state;
 
         const filteredRows = rows.filter(row => {
             return Object.keys(row).some(key => {
@@ -86,50 +90,49 @@ class ComboBox extends Component {
 
         return (
             <div>
-                    {selected.length > 0 ? (
-                        <Chip
-                            className="current"
-                            key={selected[0].key}
-                            avatar={
-                                <Avatar alt="Remy Sharp" src={selected[0].image}>
-                                </Avatar>
-                            }
-                            label={selected[0].title}
-                            deleteIcon={
-                                <CloseIcon />
-                            }
-                            onDelete={this.handleDelete}
+                {selected.length > 0 ? (
+                    <Chip
+                        className="current"
+                        key={selected[0].key}
+                        avatar={
+                            <Avatar alt="Remy Sharp" src={selected[0].image}>
+                            </Avatar>
+                        }
+                        label={selected[0].title}
+                        deleteIcon={
+                            <CloseIcon />
+                        }
+                        onDelete={this.handleDelete}
+                    />
+                ) : (
+                        <Fab variant="extended" className='add-person' onClick={this.onHandleOpen}>
+                            <AddIcon />
+                            {placeHolder}
+                        </Fab>
+                    )
+                }
+                <Modal open={open}>
+                    <Paper className='main-container'>
+                        <TextField
+                            size="small"
+                            label="Search"
+                            className={'search'}
+                            value={search}
+                            onChange={this.updateSearch}
+                            variant="outlined"
                         />
-                    ) : (
-                            <Fab variant="extended" className='add-person' onClick={this.onHandleOpen}>
-                                <AddIcon />
-                                {placeHolder}
-                            </Fab>
-                        )
-                    }
-                    <Modal open={open}>
-                        <Paper className='main-container'>
-                            <TextField
-                                size="small"
-                                className='search-box'
-                                label="Search"
-                                className={'search'}
-                                value={search}
-                                onChange={this.updateSearch}
-                                variant="outlined"
-                            />
-                            <Fab size="small" color="primary" className="close" onClick={this.handleClose}>
-                                <CloseIcon />
-                            </Fab>
-                            <List className="list-rows" style={{ maxHeight: 350 }}>
-                                {
-                                    filteredRows.map(current => {
-                                        return this.renderRows(current);
-                                    })
-                                }
-                            </List>
-                        </Paper>
-                    </Modal>
+                        <Fab size="small" color="primary" className="close" onClick={this.handleClose}>
+                            <CloseIcon />
+                        </Fab>
+                        <List className="list-rows" style={{ maxHeight: 350 }}>
+                            {
+                                filteredRows.map(current => {
+                                    return this.renderRows(current);
+                                })
+                            }
+                        </List>
+                    </Paper>
+                </Modal>
             </div>
         );
     }

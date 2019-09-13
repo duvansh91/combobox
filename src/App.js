@@ -21,17 +21,17 @@ class App extends Component {
         { key: 12, title: 'Antonio salcedo', description: '24', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
         { key: 13, title: 'Aris Julio', description: '23', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' },
         { key: 14, title: 'Winston Stand', description: '24', image: 'https://image.flaticon.com/icons/svg/701/701993.svg' }
-      ],
-      selected: ""
+      ]
     }
   }
 
   render() {
+    
     const { rows } = this.state;
 
     return (
       <div className="App">
-        <ComboBox placeHolder="Agrega un persona" data={rows} />
+        <ComboBox placeHolder="Add someone" data={rows} onChange={(value) => {console.log(value.title)}}/>
       </div>
     );
   }
